@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
+
+    <com.blingbling.widget.pagerrecyclerview.PagerRecyclerView
+        android:id="@+id/recycler1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#999"
+        android:clipToPadding="false"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        app:recycler_can_fling="false" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center" />
+
+    <com.blingbling.widget.pagerrecyclerview.PagerRecyclerView
+        android:id="@+id/recycler2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#999"
+        android:clipToPadding="false"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        app:recycler_callback_in_fling="true"
+        app:recycler_can_fling="true" />
+</LinearLayout>

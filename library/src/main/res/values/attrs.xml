@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PagerRecyclerView">
+        <attr name="recycler_can_fling" format="boolean"/>
+        <attr name="recycler_callback_in_fling" format="boolean"/>
+    </declare-styleable>
+
+</resources>
