@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
  * Created by BlingBling on 2018/7/12.
  */
-public class PagerRecyclerView extends RecyclerView {
+public class PagerRecyclerView extends RecyclerView implements RecyclerView.OnItemTouchListener {
 
     private LinearSnapHelper mSnapHelper;
 
@@ -20,6 +22,9 @@ public class PagerRecyclerView extends RecyclerView {
 
     private int mCurSelectedPosition = -1;
     private OnScrollListener mScrollListener;
+
+    private boolean mIntercept = false;
+    private GestureDetector mGestureDetector;
 
     public PagerRecyclerView(Context context) {
         this(context, null);
@@ -31,6 +36,11 @@ public class PagerRecyclerView extends RecyclerView {
 
     public PagerRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        if (!getClipToPadding()) {
+            mGestureDetector = new GestureDetector(mGestureListener);
+            addOnItemTouchListener(this);
+        }
+
         mSnapHelper = new LinearSnapHelper();
         mSnapHelper.attachToRecyclerView(this);
 
@@ -52,6 +62,45 @@ public class PagerRecyclerView extends RecyclerView {
     public void setCallbackInFling(boolean callbackInFling) {
         mCallbackInFling = callbackInFling;
     }
+
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        mGestureDetector.onTouchEvent(e);
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                final View childView = findChildViewUnder(e.getX(), e.getY());
+                final int position = getChildAdapterPosition(childView);
+                mIntercept = position != -1 && position != mCurSelectedPosition;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (mIntercept != false) {
+                    mIntercept = false;
+                }
+                break;
+        }
+        return mIntercept;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+    }
+
+    private GestureDetector.SimpleOnGestureListener mGestureListener = new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            final View childView = findChildViewUnder(e.getX(), e.getY());
+            final int position = getChildAdapterPosition(childView);
+            if (position != -1) {
+                smoothScrollToPosition(position);
+            }
+            return true;
+        }
+    };
 
     /**
      * Listen for changes to the selected item

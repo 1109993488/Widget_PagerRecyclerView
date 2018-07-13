@@ -28,5 +28,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation project(':library')
-//    implementation 'com.blingbling.widget:pager-recycler-view:1.0.0'
+//    implementation 'com.blingbling.widget:pager-recycler-view:1.1.0'
 }

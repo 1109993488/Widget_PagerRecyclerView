@@ -17,6 +17,6 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.blingbling.widget:pager-recycler-view:1.0.0'
+    implementation 'com.blingbling.widget:pager-recycler-view:1.1.0'
 }
 ```

@@ -39,7 +39,7 @@ publish {
     userOrg = '1109993488'
     groupId = 'com.blingbling.widget'
     artifactId = 'pager-recycler-view'
-    publishVersion = '1.0.0'
+    publishVersion = '1.1.0'
     desc = 'PagerRecyclerView'
     website = 'https://github.com/1109993488/Widget_PagerRecyclerView'
 }
