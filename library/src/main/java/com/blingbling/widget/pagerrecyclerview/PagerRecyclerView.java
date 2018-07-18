@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.XPagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -15,7 +17,7 @@ import android.view.View;
  */
 public class PagerRecyclerView extends RecyclerView implements RecyclerView.OnItemTouchListener {
 
-    private LinearSnapHelper mSnapHelper;
+    private SnapHelper mSnapHelper;
 
     private boolean mCanFling = false;
     private boolean mCallbackInFling = true;
@@ -41,22 +43,17 @@ public class PagerRecyclerView extends RecyclerView implements RecyclerView.OnIt
             addOnItemTouchListener(this);
         }
 
-        mSnapHelper = new LinearSnapHelper();
-        mSnapHelper.attachToRecyclerView(this);
-
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PagerRecyclerView);
         mCanFling = a.getBoolean(R.styleable.PagerRecyclerView_recycler_can_fling, mCanFling);
         mCallbackInFling = a.getBoolean(R.styleable.PagerRecyclerView_recycler_callback_in_fling, mCallbackInFling);
         a.recycle();
-    }
 
-    @Override
-    public boolean fling(int velocityX, int velocityY) {
-        return mCanFling ? super.fling(velocityX, velocityY) : false;
-    }
-
-    public void setCanFling(boolean canFling) {
-        mCanFling = canFling;
+        if (mCanFling) {
+            mSnapHelper = new LinearSnapHelper();
+        } else {
+            mSnapHelper = new XPagerSnapHelper();
+        }
+        mSnapHelper.attachToRecyclerView(this);
     }
 
     public void setCallbackInFling(boolean callbackInFling) {
